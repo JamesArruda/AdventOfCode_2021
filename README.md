@@ -1,2 +1,2 @@
 # AdventOfCode_2021
-Solution to Advent of Code 2021
+Solutions to Advent of Code 2021
