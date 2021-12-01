@@ -1,17 +1,19 @@
-from advent2021.helpers import *
+import numpy as np
+from typing import List, Tuple
 
-raw_data = get_day(1)
-data = list(map(int, raw_data.split("\n")))
 
-# Part 1
-ans_1 = (np.diff(data) > 0).sum()
+def _proc_input(input: str):
+    return list(map(int, input.split("\n")))
 
-# Part 2
-window = np.convolve(
-    data,
-    np.ones(3),
-    'valid',
-)
-ans_2 = (np.diff(window) > 0).sum()
 
-print(f"Day 1\nPart 1: {ans_1}\nPart 2: {ans_2}")
+def solve_day_1(input: str) -> Tuple[int, int]:
+    data = _proc_input(input)
+
+    ans_1 = (np.diff(data) > 0).sum()
+    window = np.convolve(
+        data,
+        np.ones(3),
+        'valid',
+    )
+    ans_2 = (np.diff(window) > 0).sum()
+    return ans_1, ans_2
