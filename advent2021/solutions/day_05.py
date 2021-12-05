@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Generator
 from collections import Counter
 import numpy as np
 
@@ -10,7 +10,7 @@ def _proc_line(line: str) -> tuple[np.ndarray, np.ndarray]:
     return np.array(st), np.array(en)
 
 
-def _along_line(st, en):
+def _along_line(st: np.ndarray, en: np.ndarray) -> Generator[np.ndarray, None, None]:
     """Generate integer point along the line from start to end.
     Assumes angle of line is 0, 45, or 90 degrees.
     """
