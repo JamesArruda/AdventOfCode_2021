@@ -1,6 +1,9 @@
 from typing import List, Callable
 from collections import Counter
-
+# This problem asks for the median and mean
+# x-locations of the data, but since it wants
+# the custom cost value, we can't get away
+# that easy.
 
 def _proc_input(input: str) -> List[int]:
     return list(map(int, input.split(",")))

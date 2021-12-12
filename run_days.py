@@ -5,6 +5,7 @@ from pathlib import Path
 INPUT_DIR = Path(__file__).parent / "resources/InputFiles"
 SESSION_FILE = Path(__file__).parent / "resources/session_id"
 
+
 for day in range(1, 26):
     func = day_solvers.get(day, None)
     if func is None:
