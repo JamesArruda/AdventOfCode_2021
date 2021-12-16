@@ -1,17 +1,12 @@
-from typing import List, Dict
 from advent2021.helpers.grids import (
-    grid_from_list, cross_neighbors, Grid
+    grid_from_list, cross_neighbors, Grid,
+    Pos, shortest_path_length
 )
-import networkx as nx
 
 
-def _make_graph(grid: Grid) -> nx.DiGraph:
-    G = nx.DiGraph()
-    for loc, val in grid.items():
-        for neigh in cross_neighbors(grid, loc):
-            val2 = grid[neigh]
-            G.add_edge(loc, neigh, weight=val2)
-    return G
+def _graph_neighbors(grid: Grid, pos: Pos):
+    for loc in cross_neighbors(grid, pos):
+        yield loc, grid[loc]
 
 
 def _enlarge_grid(grid: Grid, rows: int, cols:int) -> Grid:
@@ -29,20 +24,18 @@ def _enlarge_grid(grid: Grid, rows: int, cols:int) -> Grid:
 
 def solve_day_15(input: str) -> tuple[int, int]:
     grid = grid_from_list(input.split("\n"), int)
-    G = _make_graph(grid)
-    ans_1 = nx.shortest_path_length(
-        G,
-        source=min(grid),
-        target=max(grid),
-        weight='weight',
+    ans_1 = shortest_path_length(
+        grid,
+        min(grid),
+        max(grid),
+        _graph_neighbors,
     )
     grid = _enlarge_grid(grid, 5, 5)
-    G = _make_graph(grid)
-    ans_2 = nx.shortest_path_length(
-        G,
-        source=min(grid),
-        target=max(grid),
-        weight='weight',
+    ans_2 = shortest_path_length(
+        grid,
+        min(grid),
+        max(grid),
+        _graph_neighbors,
     )
     return ans_1, ans_2
 

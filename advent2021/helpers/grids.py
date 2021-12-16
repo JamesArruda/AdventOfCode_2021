@@ -1,8 +1,11 @@
-from typing import Generator, Any, Dict, List, Callable
+from typing import Generator, Any, Dict, List, Callable, Union
+from heapq import heappop, heappush
 
 Pos = tuple[int, int]
 Grid = Dict[Pos, Any]
 Neigh = List[tuple[int, int]]
+Numeric = Union[int, float]
+NeighborFunc = Callable[[Grid, Pos], Generator[tuple[Pos, Numeric], None, None]]
 
 DIAGS = [(1,1), (-1,1), (1,-1), (-1,-1)]
 CROSS = [(1,0), (0,1), (-1,0), (0,-1)]
@@ -58,3 +61,21 @@ def all_neighbors(grid: Grid,
     yield from _get_neighbors(grid, pos, CROSS)
 
 
+def shortest_path_length(
+    grid: Grid,
+    start: Pos,
+    finish: Pos,
+    neighbors: NeighborFunc,
+) -> Numeric:
+    dist = {start: 0}
+    Q = [(start, 0)]
+
+    while Q:
+        u, d = heappop(Q)
+        if u == finish:
+            return d
+        for pos, d_pos in neighbors(grid, u):
+            new_dist = d + d_pos
+            if new_dist < dist.get(pos, float('inf')):
+                dist[pos] = new_dist
+                heappush(Q, (pos, new_dist))
