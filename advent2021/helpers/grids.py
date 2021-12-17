@@ -69,7 +69,6 @@ def shortest_path_length(
 ) -> Numeric:
     dist = {start: 0}
     Q = [(start, 0)]
-
     while Q:
         u, d = heappop(Q)
         if u == finish:
