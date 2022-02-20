@@ -1,0 +1,3 @@
+scipy
+numpy
+z3-solver
