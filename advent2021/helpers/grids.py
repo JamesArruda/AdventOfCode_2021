@@ -68,13 +68,13 @@ def shortest_path_length(
     neighbors: NeighborFunc,
 ) -> Numeric:
     dist = {start: 0}
-    Q = [(start, 0)]
+    Q = [(0, start)]
     while Q:
-        u, d = heappop(Q)
+        d, u = heappop(Q)
         if u == finish:
             return d
         for pos, d_pos in neighbors(grid, u):
             new_dist = d + d_pos
             if new_dist < dist.get(pos, float('inf')):
                 dist[pos] = new_dist
-                heappush(Q, (pos, new_dist))
+                heappush(Q, (new_dist, pos))
